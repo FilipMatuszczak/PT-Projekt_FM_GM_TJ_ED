@@ -1,5 +1,5 @@
 #include "SFML\Graphics.hpp"
-#include <time.h> // srand()
+#include <time.h>
 #include <iostream>
 #include <vector>
 
@@ -7,55 +7,47 @@
 int main()
 {
 
-	srand(time(NULL)); // initialize rand() by using the current system time
+	srand(time(NULL));
 
-	std::vector<sf::VertexArray> vertices; // vector in wich all vertexArrays (lines, rectangles) will be stored
+	std::vector<sf::VertexArray> vertices;
 
-	enum class states { Line, Rectangle, Circle }; // current drawing mode
+	enum class states { Line, Rectangle, Circle };
 	states current_state = states::Line;
 
-	// Lines
-	vertices.push_back(sf::VertexArray()); // 1st line
-	vertices[0].setPrimitiveType(sf::LinesStrip); // PrimitiveType of the 1st line: see https://www.sfml-dev.org/tutorials/2.4/graphics-vertex-array.php
-	bool L_locked = false; // (only when in line mode) 
+	vertices.push_back(sf::VertexArray());
+	vertices[0].setPrimitiveType(sf::LinesStrip);
+	bool L_locked = false;
 
-
-	// Rectangles
-	bool R_first_MB_released = false; // (only when in rectangle mode)
-	sf::Vector2f R_first; // position of the 1st mouse button released
-	sf::Vector2f R_second; // position of the 2nd mouse button released
+	bool R_first_MB_released = false;
+	sf::Vector2f R_first;
+	sf::Vector2f R_second;
 	bool R_locked = false;
-	sf::VertexArray construction(sf::Quads); // construction rectangle (preview)
+	sf::VertexArray construction(sf::Quads);
 	for (int i = 0; i < 16; i++)
 		construction.append(sf::Vertex());
 
-	//sf::RectangleShape s;
-	//std::cout << "RectangleShape: " << sizeof(s) << ", VertexArray: " << sizeof(construction) << std::endl; std::cin.get(); std::cin.get(); // RectangleShape vs VertexArray
-
-
-	sf::Color curr_col = sf::Color::Black; // color 
+	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "µPaint", sf::Style::Close, sf::ContextSettings(0, 0, 0)); // where everythings drawn to
+	sf::RenderWindow window(sf::VideoMode(1280, 720), "µPaint", sf::Style::Close, sf::ContextSettings(0, 0, 0));
 	window.setFramerateLimit(60);
 
-	sf::Vector2i Border_Offset(-5, -25); // See (peculiarities in the 1st part: https://steemit.com/steemstem/@numbo/c-sfml-paint-a-simple-drawing-program )
+	sf::Vector2i Border_Offset(-5, -25);
 
 	while (window.isOpen())
 	{
 
-		// Events
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
 
-			if (event.type == sf::Event::KeyPressed) // closing window
+			if (event.type == sf::Event::KeyPressed)
 				if (event.key.code == sf::Keyboard::Key::Escape)
 					window.close();
-			if (event.type == sf::Event::Closed) // closing window
+			if (event.type == sf::Event::Closed)
 				window.close();
 
-			if (event.type == sf::Event::KeyPressed) // Switch between drawing modes
+			if (event.type == sf::Event::KeyPressed)
 			{
 				if (event.key.code == sf::Keyboard::Key::L)
 					current_state = states::Line;
@@ -71,7 +63,7 @@ int main()
 					L_locked = true;
 				else if (current_state == states::Rectangle)
 				{
-					if (R_first_MB_released) // Only when the 1st button is already defined, define the second one
+					if (R_first_MB_released)
 					{
 						R_second = sf::Vector2f(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
 						R_locked = true;
@@ -79,7 +71,6 @@ int main()
 				}
 				else if (current_state == states::Circle)
 				{
-					// DIY
 				}
 
 			}
@@ -89,20 +80,19 @@ int main()
 
 				if (current_state == states::Line)
 				{
-					// Add a new line
 					vertices.push_back(sf::VertexArray());
 					vertices[vertices.size() - 1].setPrimitiveType(sf::LinesStrip);
 
-					L_locked = false; // Reset line
+					L_locked = false;
 				}
 				else if (current_state == states::Rectangle)
 				{
-					if (!R_first_MB_released) // Define the 1st position
+					if (!R_first_MB_released)
 					{
 						R_first_MB_released = true;
 						R_first = sf::Vector2f(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
 					}
-					if (R_first_MB_released && R_locked) // Set the final position -> save and reset
+					if (R_first_MB_released && R_locked)
 					{
 						vertices.push_back(construction);
 
@@ -117,36 +107,29 @@ int main()
 				}
 				else if (current_state == states::Circle)
 				{
-					// DIY
 				}
 
 
 
 			}
-		} // End Events
+		}
 
-
-		// Construction of a line
 		if (L_locked)
 		{
-			if (last_Mouse_pos != sf::Mouse::getPosition()) // Only add, when the mouse has moved (save memory)
+			if (last_Mouse_pos != sf::Mouse::getPosition())
 			{
-				//.append(Position, Farbe) : .append(MousePos - WindowPos + MouseOffset, curr_col)
 				vertices[vertices.size() - 1].append(sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x - window.getPosition().x + Border_Offset.x, sf::Mouse::getPosition().y - window.getPosition().y + Border_Offset.y), curr_col));
 
 				last_Mouse_pos = sf::Mouse::getPosition();
 			}
 		}
 
-		// Construction of a rectangle
 		if (R_locked)
 		{
 			if (last_Mouse_pos != sf::Mouse::getPosition())
 			{
-				//calculate (see Functional description (behind the scenes))
-				// = QuadsStrip DIY
 
-				sf::Vector2f render_mouse_pos(sf::Mouse::getPosition() - window.getPosition() + Border_Offset); // see mouse coordinate mapping in part 1
+				sf::Vector2f render_mouse_pos(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
 
 				construction[0] = sf::Vertex(R_first, curr_col);
 				construction[1] = sf::Vertex(R_second, curr_col);
@@ -168,27 +151,20 @@ int main()
 				construction[14] = sf::Vertex(construction[1].position, curr_col);
 				construction[15] = sf::Vertex(construction[0].position, curr_col);
 
-				last_Mouse_pos = sf::Mouse::getPosition(); // reset mouse position
+				last_Mouse_pos = sf::Mouse::getPosition();
 
 			}
 		}
 
-		//curr_col = sf::Color::Color(rand() % 255, rand() % 255, rand() % 255);
 
+		window.clear(sf::Color::White);
 
-		//std::cout << "vertices in line " << lines_number << ": " << vertices[lines_number].getVertexCount() << std::endl;
-
-		
-
-		window.clear(sf::Color::White); // delete the current scene with a specific color
-
-		// draw everything
 		for (int i = 0; i < vertices.size(); i++)
 		{
 			window.draw(vertices[i]);
 		}
 
-		window.draw(construction); // construction rectangle -> preview
+		window.draw(construction);
 
 		window.display();
 	}
