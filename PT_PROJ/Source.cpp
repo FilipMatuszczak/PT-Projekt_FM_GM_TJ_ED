@@ -2,11 +2,11 @@
 #include <time.h>
 #include <iostream>
 #include <vector>
+#include "button.hpp"
 
-
+using namespace sf;
 int main()
 {
-
 	srand(time(NULL));
 
 	std::vector<sf::VertexArray> vertices;
@@ -29,11 +29,27 @@ int main()
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(1280, 720), "µPaint", sf::Style::Close, sf::ContextSettings(0, 0, 0));
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "PPencil", sf::Style::Close, sf::ContextSettings(0, 0, 0));
 	window.setFramerateLimit(60);
 
 	sf::Vector2i Border_Offset(-5, -25);
+	Texture* texture_normal = new Texture();
+	Texture* texture_hover = new Texture();
+	Texture* texture_clicked = new Texture();
 
+	if (!texture_normal->loadFromFile("./icons/clear_free.png", sf::IntRect(0, 0, 572, 572)))
+	{
+		std::cout << "cos poszlo nie tak";
+	}
+	if (!texture_hover->loadFromFile("./icons/clear_hover.png", sf::IntRect(0, 0, 572, 572)))
+	{
+		std::cout << "cos poszlo nie tak";
+	}	if (!texture_clicked->loadFromFile("./icons/clear_pressed.png", sf::IntRect(0, 0, 572, 572)))
+	{
+		std::cout << "cos poszlo nie tak";
+	}
+
+	Button b(texture_normal, texture_clicked, texture_hover, sf::Vector2f(0,0));
 	while (window.isOpen())
 	{
 
@@ -47,70 +63,18 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-			if (event.type == sf::Event::KeyPressed)
-			{
-				if (event.key.code == sf::Keyboard::Key::L)
-					current_state = states::Line;
-				else if (event.key.code == sf::Keyboard::Key::R)
-					current_state = states::Rectangle;
-				else if (event.key.code == sf::Keyboard::Key::C)
-					current_state = states::Circle;
-			}
-
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
-				if (current_state == states::Line)
 					L_locked = true;
-				else if (current_state == states::Rectangle)
-				{
-					if (R_first_MB_released)
-					{
-						R_second = sf::Vector2f(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
-						R_locked = true;
-					}
-				}
-				else if (current_state == states::Circle)
-				{
-				}
-
 			}
 
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
 
-				if (current_state == states::Line)
-				{
 					vertices.push_back(sf::VertexArray());
 					vertices[vertices.size() - 1].setPrimitiveType(sf::LinesStrip);
 
 					L_locked = false;
-				}
-				else if (current_state == states::Rectangle)
-				{
-					if (!R_first_MB_released)
-					{
-						R_first_MB_released = true;
-						R_first = sf::Vector2f(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
-					}
-					if (R_first_MB_released && R_locked)
-					{
-						vertices.push_back(construction);
-
-						R_first_MB_released = false;
-						R_locked = false;
-
-						curr_col = sf::Color::Color(rand() % 255, rand() % 255, rand() % 255);
-
-						for (int i = 0; i < construction.getVertexCount(); i++)
-							construction[i].position = sf::Vector2f(0, 0);
-					}
-				}
-				else if (current_state == states::Circle)
-				{
-				}
-
-
-
 			}
 		}
 
@@ -124,48 +88,16 @@ int main()
 			}
 		}
 
-		if (R_locked)
-		{
-			if (last_Mouse_pos != sf::Mouse::getPosition())
-			{
-
-				sf::Vector2f render_mouse_pos(sf::Mouse::getPosition() - window.getPosition() + Border_Offset);
-
-				construction[0] = sf::Vertex(R_first, curr_col);
-				construction[1] = sf::Vertex(R_second, curr_col);
-				construction[2] = sf::Vertex(sf::Vector2f(render_mouse_pos.x - (R_second.x - R_first.x), R_second.y), curr_col);
-				construction[3] = sf::Vertex(sf::Vector2f(render_mouse_pos.x, R_first.y), curr_col);
-
-				construction[4] = sf::Vertex(construction[3].position, curr_col);
-				construction[5] = sf::Vertex(construction[2].position, curr_col);
-				construction[6] = sf::Vertex(sf::Vector2f(render_mouse_pos.x - (R_second.x - R_first.x), render_mouse_pos.y - (R_second.y - R_first.y)), curr_col);
-				construction[7] = sf::Vertex(sf::Vector2f(render_mouse_pos), curr_col);
-
-				construction[8] = sf::Vertex(construction[7].position, curr_col);
-				construction[9] = sf::Vertex(construction[6].position, curr_col);
-				construction[10] = sf::Vertex(sf::Vector2f(construction[1].position.x, construction[6].position.y), curr_col);
-				construction[11] = sf::Vertex(sf::Vector2f(construction[0].position.x, construction[7].position.y), curr_col);
-
-				construction[12] = sf::Vertex(construction[11].position, curr_col);
-				construction[13] = sf::Vertex(construction[10].position, curr_col);
-				construction[14] = sf::Vertex(construction[1].position, curr_col);
-				construction[15] = sf::Vertex(construction[0].position, curr_col);
-
-				last_Mouse_pos = sf::Mouse::getPosition();
-
-			}
-		}
-
-
 		window.clear(sf::Color::White);
 
 		for (int i = 0; i < vertices.size(); i++)
 		{
 			window.draw(vertices[i]);
 		}
-
+		b.checkHover(sf::Vector2f(sf::Mouse::getPosition(window)));
+		b.checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 		window.draw(construction);
-
+		window.draw(*b.getSprite());
 		window.display();
 	}
 
