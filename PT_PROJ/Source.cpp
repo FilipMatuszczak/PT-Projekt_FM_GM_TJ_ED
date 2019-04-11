@@ -97,7 +97,7 @@ int main()
 		b.checkHover(sf::Vector2f(sf::Mouse::getPosition(window)));
 		b.checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 		window.draw(construction);
-		window.draw(*b.getSprite());
+		//window.draw(*b.getSprite());
 		window.display();
 	}
 
