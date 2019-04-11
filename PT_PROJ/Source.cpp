@@ -29,12 +29,12 @@ int main()
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "PPencil", sf::Style::Close, sf::ContextSettings(0, 0, 0));
+	sf::RenderWindow window(sf::VideoMode(1200, 800), "PPencil", sf::Style::Close, sf::ContextSettings(0, 0, 0));
 	window.setFramerateLimit(60);
 
 	sf::Vector2i Border_Offset(-5, -25);
 	Texture* texture_normal = new Texture();
-	Texture* texture_hover = new Texture();
+	Texture* texture_hover = new Texture(); 
 	Texture* texture_clicked = new Texture();
 
 	if (!texture_normal->loadFromFile("./icons/clear_free.png", sf::IntRect(0, 0, 572, 572)))
