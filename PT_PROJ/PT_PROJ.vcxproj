@@ -70,12 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\oem\source\repos\PT_PROJ\SFML-2.5.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\oem\source\repos\PT_PROJ\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\SFML-2.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>C:\Users\oem\source\repos\PT_PROJ\SFML-2.5.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\oem\source\repos\PT_PROJ\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\SFML-2.5.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\SFML-2.5.1\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
