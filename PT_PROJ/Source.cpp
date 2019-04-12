@@ -3,13 +3,29 @@
 #include <iostream>
 #include <vector>
 #include "button.hpp"
-
+#include "ClearButton.hpp"
+#include "EraserButton.hpp"
+#include "HandButton.hpp"
+#include "MinusButton.hpp"
+#include "PenButton.hpp"
+#include "PlusButton.hpp"
+#include "SaveButton.hpp"
+#include "SettingsButton.hpp"
+#include "buttons_initialization.hpp"
+#include <vector>
 using namespace sf;
 int main()
 {
 	srand(time(NULL));
 
 	std::vector<sf::VertexArray> vertices;
+
+	sf::RectangleShape menu;
+	menu.setSize(sf::Vector2f(1200, 70));
+	menu.setOutlineColor(sf::Color::Black);
+	menu.setOutlineThickness(5);
+	menu.setFillColor(sf::Color(245,222,179,255));
+	menu.setPosition(0, 0);
 
 	enum class states { Line, Rectangle, Circle };
 	states current_state = states::Line;
@@ -33,23 +49,26 @@ int main()
 	window.setFramerateLimit(60);
 
 	sf::Vector2i Border_Offset(-5, -25);
-	Texture* texture_normal = new Texture();
-	Texture* texture_hover = new Texture(); 
-	Texture* texture_clicked = new Texture();
 
-	if (!texture_normal->loadFromFile("./icons/clear_free.png", sf::IntRect(0, 0, 572, 572)))
-	{
-		std::cout << "cos poszlo nie tak";
-	}
-	if (!texture_hover->loadFromFile("./icons/clear_hover.png", sf::IntRect(0, 0, 572, 572)))
-	{
-		std::cout << "cos poszlo nie tak";
-	}	if (!texture_clicked->loadFromFile("./icons/clear_pressed.png", sf::IntRect(0, 0, 572, 572)))
-	{
-		std::cout << "cos poszlo nie tak";
-	}
+	ClearButton clearButton = getClear(1);
+	EraserButton eraserButton = getEraser(6);
+	HandButton handButton = getHand(2);
+	MinusButton minusButton = getMinus(4);
+	PenButton penButton = getPen(5);
+	PlusButton plusButton = getPlus(3);
+	SaveButton saveButton = getSave(0);
+	SettingsButton settingsButton = getSettings(7);
 
-	Button b(texture_normal, texture_clicked, texture_hover, sf::Vector2f(0,0));
+	std::vector<Button*> buttons;
+	buttons.push_back(&clearButton);
+	buttons.push_back(&eraserButton);
+	buttons.push_back(&handButton);
+	buttons.push_back(&minusButton);
+	buttons.push_back(&penButton);
+	buttons.push_back(&plusButton);
+	buttons.push_back(&saveButton);
+	buttons.push_back(&settingsButton);
+
 	while (window.isOpen())
 	{
 
@@ -74,6 +93,13 @@ int main()
 					vertices.push_back(sf::VertexArray());
 					vertices[vertices.size() - 1].setPrimitiveType(sf::LinesStrip);
 
+					for (Button *b : buttons)
+					{
+						if (b->checkClicked(sf::Vector2f(sf::Mouse::getPosition(window)))) {
+							b->action();
+						}
+					}
+
 					L_locked = false;
 			}
 		}
@@ -94,10 +120,15 @@ int main()
 		{
 			window.draw(vertices[i]);
 		}
-		b.checkHover(sf::Vector2f(sf::Mouse::getPosition(window)));
-		b.checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
-		window.draw(construction);
-		//window.draw(*b.getSprite());
+
+		window.draw(menu);
+		for (Button *b : buttons)
+		{
+			b->checkHover(sf::Vector2f(sf::Mouse::getPosition(window)));
+			b->checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
+			window.draw(*b->getSprite());
+		}
+
 		window.display();
 	}
 

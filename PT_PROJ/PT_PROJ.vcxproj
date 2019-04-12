@@ -145,6 +145,14 @@
   <ItemGroup>
     <ClInclude Include="button.hpp" />
     <ClInclude Include="buttons_initialization.hpp" />
+    <ClInclude Include="ClearButton.hpp" />
+    <ClInclude Include="EraserButton.hpp" />
+    <ClInclude Include="HandButton.hpp" />
+    <ClInclude Include="MinusButton.hpp" />
+    <ClInclude Include="PenButton.hpp" />
+    <ClInclude Include="PlusButton.hpp" />
+    <ClInclude Include="SaveButton.hpp" />
+    <ClInclude Include="SettingsButton.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

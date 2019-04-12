@@ -29,5 +29,29 @@
     <ClInclude Include="buttons_initialization.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClearButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EraserButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HandButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PenButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlusButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusButton.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
