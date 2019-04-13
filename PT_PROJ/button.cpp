@@ -83,4 +83,13 @@ sf::Sprite* Button::getSprite() {
 	return currentSpr;
 }
 
+bool Button::isClicked()
+{
+	if (this->currentSpr == &clicked) {
+		return true;
+	}
+
+	return false;
+}
+
 

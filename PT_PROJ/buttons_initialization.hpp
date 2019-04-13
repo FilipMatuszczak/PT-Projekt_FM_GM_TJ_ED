@@ -18,7 +18,7 @@
 #include "SettingsButton.hpp"
 
 using namespace sf;
-int incr = 65;
+
 void loadTexture(Texture &texture, std::string path) {
 	if (!texture.loadFromFile(path, sf::IntRect(0, 0, 572, 572)))
 	{
@@ -26,29 +26,29 @@ void loadTexture(Texture &texture, std::string path) {
 	}
 }
 
-ClearButton getClear(int i)
+ClearButton getClear(int i, std::vector<sf::VertexArray>* vertices, int windowSize)
 {
 	Texture* texture_clear_normal = new Texture();
 	Texture* texture_clear_hover = new Texture();
 	Texture* texture_clear_clicked = new Texture();
 
-	int x = incr *i;
+	int x = windowSize/20 *i;
 	int y = 0;
 
 	loadTexture(*texture_clear_normal, "./icons/clear_free.png");
 	loadTexture(*texture_clear_hover, "./icons/clear_hover.png");
 	loadTexture(*texture_clear_clicked, "./icons/clear_pressed.png");
 
-	return ClearButton(texture_clear_normal, texture_clear_clicked, texture_clear_hover, sf::Vector2f(x, y), 0.1);
+	return ClearButton(texture_clear_normal, texture_clear_clicked, texture_clear_hover, sf::Vector2f(x, y), 0.1, vertices);
 }
 
-SaveButton getSave(int i)
+SaveButton getSave(int i, int windowSize)
 {
 	Texture* texture_save_normal = new Texture();
 	Texture* texture_save_hover = new Texture();
 	Texture* texture_save_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_save_normal, "./icons/save_free.png");
@@ -58,13 +58,13 @@ SaveButton getSave(int i)
 	return SaveButton(texture_save_normal, texture_save_clicked, texture_save_hover, sf::Vector2f(x, y), 0.1);
 }
 
-HandButton getHand(int i)
+HandButton getHand(int i, int windowSize)
 {
 	Texture* texture_hand_normal = new Texture();
 	Texture* texture_hand_hover = new Texture();
 	Texture* texture_hand_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_hand_normal, "./icons/hand_free.png");
@@ -74,14 +74,14 @@ HandButton getHand(int i)
 	return HandButton(texture_hand_normal, texture_hand_clicked, texture_hand_hover, sf::Vector2f(x, y), 0.1);
 }
 
-PlusButton getPlus(int i)
+PlusButton getPlus(int i, int windowSize)
 {
 	std::vector<Button> buttons;
 	Texture* texture_plus_normal = new Texture();
 	Texture* texture_plus_hover = new Texture();
 	Texture* texture_plus_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_plus_normal, "./icons/plus_free.png");
@@ -91,14 +91,14 @@ PlusButton getPlus(int i)
 	return PlusButton(texture_plus_normal, texture_plus_clicked, texture_plus_hover, sf::Vector2f(x, y), 0.1);
 }
 
-MinusButton getMinus(int i)
+MinusButton getMinus(int i, int windowSize)
 {
 	std::vector<Button> buttons;
 	Texture* texture_minus_normal = new Texture();
 	Texture* texture_minus_hover = new Texture();
 	Texture* texture_minus_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_minus_normal, "./icons/minus_free.png");
@@ -108,31 +108,31 @@ MinusButton getMinus(int i)
 	return MinusButton(texture_minus_normal, texture_minus_clicked, texture_minus_hover, sf::Vector2f(x, y), 0.1);
 }
 
-EraserButton getEraser(int i)
+EraserButton getEraser(int i, int windowSize, sf::Color *curr_col)
 {
 	std::vector<Button> buttons;
 	Texture* texture_normal = new Texture();
 	Texture* texture_hover = new Texture();
 	Texture* texture_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_normal, "./icons/eraser_free.png");
 	loadTexture(*texture_hover, "./icons/eraser_hover.png");
 	loadTexture(*texture_clicked, "./icons/eraser_pressed.png");
 
-	return EraserButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), 0.1);
+	return EraserButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), 0.1, curr_col);
 }
 
-SettingsButton getSettings(int i)
+SettingsButton getSettings(int i, int windowSize)
 {
 	std::vector<Button> buttons;
 	Texture* texture_normal = new Texture();
 	Texture* texture_hover = new Texture();
 	Texture* texture_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 	int y = 0;
 
 	loadTexture(*texture_normal, "./icons/settings_free.png");
@@ -142,14 +142,14 @@ SettingsButton getSettings(int i)
 	return SettingsButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), 0.1);
 }
 
-PenButton getPen(int i)
+PenButton getPen(int i, int windowSize)
 {
 	std::vector<Button> buttons;
 	Texture* texture_normal = new Texture();
 	Texture* texture_hover = new Texture();
 	Texture* texture_clicked = new Texture();
 
-	int x = incr * i;
+	int x = windowSize / 20 * i;
 
 	loadTexture(*texture_normal, "./icons/pen_free.png");
 	loadTexture(*texture_hover, "./icons/pen_hover.png");

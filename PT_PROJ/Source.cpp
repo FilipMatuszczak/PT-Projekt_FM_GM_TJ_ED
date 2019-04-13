@@ -20,16 +20,6 @@ int main()
 
 	std::vector<sf::VertexArray> vertices;
 
-	sf::RectangleShape menu;
-	menu.setSize(sf::Vector2f(1200, 70));
-	menu.setOutlineColor(sf::Color::Black);
-	menu.setOutlineThickness(5);
-	menu.setFillColor(sf::Color(245,222,179,255));
-	menu.setPosition(0, 0);
-
-	enum class states { Line, Rectangle, Circle };
-	states current_state = states::Line;
-
 	vertices.push_back(sf::VertexArray());
 	vertices[0].setPrimitiveType(sf::LinesStrip);
 	bool L_locked = false;
@@ -45,21 +35,29 @@ int main()
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(1200, 800), "PPencil", sf::Style::Close, sf::ContextSettings(0, 0, 0));
+	sf::RenderWindow window(sf::VideoMode(1200, 800), "PPencil", sf::Style::Fullscreen, sf::ContextSettings(0, 0, 0));
 	window.setFramerateLimit(60);
 
-	sf::Vector2i Border_Offset(-5, -25);
+	sf::RectangleShape menu;
+	menu.setSize(sf::Vector2f(window.getSize().x, 70));
+	menu.setOutlineColor(sf::Color::Black);
+	menu.setOutlineThickness(5);
+	menu.setFillColor(sf::Color(245, 222, 179, 255));
+	menu.setPosition(0, 0);
 
-	ClearButton clearButton = getClear(1);
-	EraserButton eraserButton = getEraser(6);
-	HandButton handButton = getHand(2);
-	MinusButton minusButton = getMinus(4);
-	PenButton penButton = getPen(5);
-	PlusButton plusButton = getPlus(3);
-	SaveButton saveButton = getSave(0);
-	SettingsButton settingsButton = getSettings(7);
+	sf::Vector2i Border_Offset(0, 0);
+
+	ClearButton clearButton = getClear(1, &vertices, window.getSize().x);
+	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
+	HandButton handButton = getHand(2, window.getSize().x);
+	MinusButton minusButton = getMinus(4, window.getSize().x);
+	PenButton penButton = getPen(5, window.getSize().x);
+	PlusButton plusButton = getPlus(3, window.getSize().x);
+	SaveButton saveButton = getSave(0, window.getSize().x);
+	SettingsButton settingsButton = getSettings(7, window.getSize().x);
 
 	std::vector<Button*> buttons;
+
 	buttons.push_back(&clearButton);
 	buttons.push_back(&eraserButton);
 	buttons.push_back(&handButton);
@@ -109,7 +107,7 @@ int main()
 			if (last_Mouse_pos != sf::Mouse::getPosition())
 			{
 				vertices[vertices.size() - 1].append(sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x - window.getPosition().x + Border_Offset.x, sf::Mouse::getPosition().y - window.getPosition().y + Border_Offset.y), curr_col));
-
+			
 				last_Mouse_pos = sf::Mouse::getPosition();
 			}
 		}
@@ -131,7 +129,6 @@ int main()
 
 		window.display();
 	}
-
 
 	return 0;
 }

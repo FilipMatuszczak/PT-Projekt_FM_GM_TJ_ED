@@ -13,5 +13,9 @@ public:
 
 	void action() override {
 		std::cout << "Plus!";
+
+		//do something
+
+		this->setState(state::state_hovered);
 	}
 };
