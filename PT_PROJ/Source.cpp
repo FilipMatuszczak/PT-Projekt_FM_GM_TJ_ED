@@ -12,7 +12,7 @@
 #include "SaveButton.hpp"
 #include "SettingsButton.hpp"
 #include "buttons_initialization.hpp"
-#include <vector>
+
 using namespace sf;
 int main()
 {
@@ -46,7 +46,7 @@ int main()
 	menu.setPosition(0, 0);
 
 	sf::Vector2i Border_Offset(0, 0);
-
+	std::vector<Button*> *Colorbuttons = new std::vector<Button*>();
 	ClearButton clearButton = getClear(1, &vertices, window.getSize().x);
 	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
 	HandButton handButton = getHand(2, window.getSize().x);
@@ -54,9 +54,17 @@ int main()
 	PenButton penButton = getPen(5, window.getSize().x);
 	PlusButton plusButton = getPlus(3, window.getSize().x);
 	SaveButton saveButton = getSave(0, window.getSize().x);
-	SettingsButton settingsButton = getSettings(7, window.getSize().x);
-
+	SettingsButton settingsButton = getSettings(14, window.getSize().x);
+	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton blueButton = getBlue(12, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton greenButton = getGreen(11, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton purpleButton = getPurple(13, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton redButton = getRed(10, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton whiteButton = getWhite(8, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton yellowButton = getYellow(9, window.getSize().x, &curr_col, Colorbuttons);
+	ExitButton exitButton = getExit(15, window.getSize().x, &window);
 	std::vector<Button*> buttons;
+	
 
 	buttons.push_back(&clearButton);
 	buttons.push_back(&eraserButton);
@@ -66,6 +74,22 @@ int main()
 	buttons.push_back(&plusButton);
 	buttons.push_back(&saveButton);
 	buttons.push_back(&settingsButton);
+	buttons.push_back(&blackButton);
+	buttons.push_back(&blueButton);
+	buttons.push_back(&greenButton);
+	buttons.push_back(&purpleButton);
+	buttons.push_back(&redButton);
+	buttons.push_back(&whiteButton);
+	buttons.push_back(&yellowButton);
+	buttons.push_back(&exitButton);
+
+	Colorbuttons->push_back(&blackButton);
+	Colorbuttons->push_back(&blueButton);
+	Colorbuttons->push_back(&greenButton);
+	Colorbuttons->push_back(&purpleButton);
+	Colorbuttons->push_back(&redButton);
+	Colorbuttons->push_back(&whiteButton);
+	Colorbuttons->push_back(&yellowButton);
 
 	while (window.isOpen())
 	{
