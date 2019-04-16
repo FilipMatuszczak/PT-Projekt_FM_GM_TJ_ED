@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\OpenCV-3.4\opencv\build\include;C:\OpenCV-3.4\opencv\build\include\opencv;C:\OpenCV-3.4\opencv\build\include\opencv2</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\OpenCV-3.4\opencv\build\x64\vc15\lib</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Przemkov\OpenCV-3.4\opencv\build\include;C:\Przemkov\OpenCV-3.4\opencv\build\include\opencv;C:\Przemkov\OpenCV-3.4\opencv\build\include\opencv2</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Przemkov\OpenCV-3.4\opencv\build\x64\vc15\lib;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\OpenCV-3.4\opencv\build\include;C:\OpenCV-3.4\opencv\build\include\opencv;C:\OpenCV-3.4\opencv\build\include\opencv2</IncludePath>
@@ -95,6 +95,9 @@
     <Link>
       <AdditionalDependencies>opencv_world340d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
