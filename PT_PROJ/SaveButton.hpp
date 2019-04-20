@@ -10,38 +10,27 @@ using namespace sf;
 class SaveButton :public Button {
 public:
 	sf::Window * window;
-	SaveButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, sf::Window * window) :Button(normal, clicked, hovered, location, scale) 
+	SaveButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, sf::Window * window) :Button(normal, clicked, hovered, location, scale)
 	{
 		this->window = window;
 	}
 
 	void action() override {
-		std::cout << "Save!";
+		sf::Texture texture, background;
+		texture.create(window->getSize().x, window->getSize().y);
+		texture.update(*window);
 
-		
+		std::string filename = "screen.png";
 
-			sf::Texture texture, tlo;
-			texture.create(window->getSize().x, window->getSize().y);
-			texture.update(*window);
+		if (texture.copyToImage().saveToFile(filename))
+		{
+			background.loadFromFile(filename, sf::IntRect(0, 75, window->getSize().x, window->getSize().y-75));
+			background.copyToImage().saveToFile(filename);
+		} else
+		{
+			std::cout << "save failed " << std::endl;
+		}
 
-
-			if (texture.copyToImage().saveToFile("screen.png"))
-			{
-				std::cout << "screenshot saved " << std::endl;
-
-				tlo.loadFromFile("screen.png", sf::IntRect(0, 75, 1920, 1005));
-				tlo.copyToImage().saveToFile("screen.png");
-
-			}
-			else
-			{
-				std::cout << "save failed " << std::endl;
-			}
-
-
-	
-};
-
-
-
+		this->setState(state::state_normal);
+	};
 };
