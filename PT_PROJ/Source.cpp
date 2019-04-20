@@ -53,7 +53,7 @@ int main()
 	MinusButton minusButton = getMinus(4, window.getSize().x);
 	PenButton penButton = getPen(5, window.getSize().x);
 	PlusButton plusButton = getPlus(3, window.getSize().x);
-	SaveButton saveButton = getSave(0, window.getSize().x);
+	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	SettingsButton settingsButton = getSettings(14, window.getSize().x);
 	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton blueButton = getBlue(12, window.getSize().x, &curr_col, Colorbuttons);
@@ -103,6 +103,8 @@ int main()
 					window.close();
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			
 
 			if (event.type == sf::Event::MouseButtonPressed)
 			{

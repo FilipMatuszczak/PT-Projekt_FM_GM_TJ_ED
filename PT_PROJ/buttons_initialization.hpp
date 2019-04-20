@@ -27,6 +27,7 @@ void loadTexture(Texture &texture, std::string path) {
 	{
 		std::cout << "Failed to load an icon";
 	}
+	
 }
 
 ClearButton getClear(int i, std::vector<sf::VertexArray>* vertices, int windowSize)
@@ -45,7 +46,7 @@ ClearButton getClear(int i, std::vector<sf::VertexArray>* vertices, int windowSi
 	return ClearButton(texture_clear_normal, texture_clear_clicked, texture_clear_hover, sf::Vector2f(x, y), scale, vertices);
 }
 
-SaveButton getSave(int i, int windowSize)
+SaveButton getSave(int i, int windowSize, sf::Window * window)
 {
 	Texture* texture_save_normal = new Texture();
 	Texture* texture_save_hover = new Texture();
@@ -58,7 +59,7 @@ SaveButton getSave(int i, int windowSize)
 	loadTexture(*texture_save_hover, "./icons/save_hover.png");
 	loadTexture(*texture_save_clicked, "./icons/save_pressed.png");
 
-	return SaveButton(texture_save_normal, texture_save_clicked, texture_save_hover, sf::Vector2f(x, y), scale);
+	return SaveButton(texture_save_normal, texture_save_clicked, texture_save_hover, sf::Vector2f(x, y), scale, window);
 }
 
 HandButton getHand(int i, int windowSize)
