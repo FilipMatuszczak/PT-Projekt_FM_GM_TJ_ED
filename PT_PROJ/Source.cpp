@@ -14,6 +14,7 @@
 #include "buttons_initialization.hpp"
 
 using namespace sf;
+
 int main()
 {
 	srand(time(NULL));
@@ -22,12 +23,9 @@ int main()
 
 	vertices.push_back(sf::VertexArray());
 	vertices[0].setPrimitiveType(sf::LinesStrip);
+
 	bool L_locked = false;
 
-	bool R_first_MB_released = false;
-	sf::Vector2f R_first;
-	sf::Vector2f R_second;
-	bool R_locked = false;
 	sf::VertexArray construction(sf::Quads);
 	for (int i = 0; i < 16; i++)
 		construction.append(sf::Vertex());
@@ -47,25 +45,26 @@ int main()
 
 	sf::Vector2i Border_Offset(0, 0);
 	std::vector<Button*> *Colorbuttons = new std::vector<Button*>();
+
+	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &vertices, window.getSize().x);
-	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
 	HandButton handButton = getHand(2, window.getSize().x);
+	PlusButton plusButton = getPlus(3, window.getSize().x);
 	MinusButton minusButton = getMinus(4, window.getSize().x);
 	PenButton penButton = getPen(5, window.getSize().x);
-	PlusButton plusButton = getPlus(3, window.getSize().x);
-	SaveButton saveButton = getSave(0, window.getSize().x, &window);
-	SettingsButton settingsButton = getSettings(14, window.getSize().x);
+	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
 	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons);
-	ColorButton blueButton = getBlue(12, window.getSize().x, &curr_col, Colorbuttons);
-	ColorButton greenButton = getGreen(11, window.getSize().x, &curr_col, Colorbuttons);
-	ColorButton purpleButton = getPurple(13, window.getSize().x, &curr_col, Colorbuttons);
-	ColorButton redButton = getRed(10, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton whiteButton = getWhite(8, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton yellowButton = getYellow(9, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton redButton = getRed(10, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton greenButton = getGreen(11, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton blueButton = getBlue(12, window.getSize().x, &curr_col, Colorbuttons);
+	ColorButton purpleButton = getPurple(13, window.getSize().x, &curr_col, Colorbuttons);
+	SettingsButton settingsButton = getSettings(14, window.getSize().x);
 	ExitButton exitButton = getExit(15, window.getSize().x, &window);
+
 	std::vector<Button*> buttons;
 	
-
 	buttons.push_back(&clearButton);
 	buttons.push_back(&eraserButton);
 	buttons.push_back(&handButton);
@@ -93,18 +92,14 @@ int main()
 
 	while (window.isOpen())
 	{
-
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-
 			if (event.type == sf::Event::KeyPressed)
 				if (event.key.code == sf::Keyboard::Key::Escape)
 					window.close();
 			if (event.type == sf::Event::Closed)
 				window.close();
-
-			
 
 			if (event.type == sf::Event::MouseButtonPressed)
 			{
@@ -113,7 +108,6 @@ int main()
 
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
-
 					vertices.push_back(sf::VertexArray());
 					vertices[vertices.size() - 1].setPrimitiveType(sf::LinesStrip);
 
