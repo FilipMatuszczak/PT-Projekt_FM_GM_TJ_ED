@@ -12,6 +12,7 @@
 #include "SaveButton.hpp"
 #include "SettingsButton.hpp"
 #include "buttons_initialization.hpp"
+#include "drawingInitialization.hpp"
 
 using namespace sf;
 
@@ -19,22 +20,16 @@ int main()
 {
 	srand(time(NULL));
 
-	std::vector<sf::VertexArray> vertices;
+	std::vector<std::vector<sf::VertexArray>> vertices;
 
-	vertices.push_back(sf::VertexArray());
-	vertices[0].setPrimitiveType(sf::LinesStrip);
+	initialize_drawer(vertices);
 
 	bool L_locked = false;
-
-	sf::VertexArray construction(sf::Quads);
-	for (int i = 0; i < 16; i++)
-		construction.append(sf::Vertex());
 
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(1200, 800), "PPencil", sf::Style::Fullscreen, sf::ContextSettings(0, 0, 0));
-	window.setFramerateLimit(60);
+	sf::RenderWindow window(sf::VideoMode(), "PPencil", sf::Style::Fullscreen);
 
 	sf::RectangleShape menu;
 	menu.setSize(sf::Vector2f(window.getSize().x, 70));
@@ -89,7 +84,7 @@ int main()
 	Colorbuttons->push_back(&redButton);
 	Colorbuttons->push_back(&whiteButton);
 	Colorbuttons->push_back(&yellowButton);
-
+	window.setVerticalSyncEnabled(false);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -108,8 +103,10 @@ int main()
 
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
-					vertices.push_back(sf::VertexArray());
-					vertices[vertices.size() - 1].setPrimitiveType(sf::LinesStrip);
+				for (std::vector<sf::VertexArray> &vertice : vertices) {
+					vertice.push_back(sf::VertexArray());
+					vertice[vertice.size() - 1].setPrimitiveType(sf::LinesStrip);
+				}
 
 					for (Button *b : buttons)
 					{
@@ -124,21 +121,18 @@ int main()
 
 		if (L_locked)
 		{
-			if (last_Mouse_pos != sf::Mouse::getPosition())
-			{
-				vertices[vertices.size() - 1].append(sf::Vertex(sf::Vector2f(sf::Mouse::getPosition().x - window.getPosition().x + Border_Offset.x, sf::Mouse::getPosition().y - window.getPosition().y + Border_Offset.y), curr_col));
-			
-				last_Mouse_pos = sf::Mouse::getPosition();
-			}
+				draw(sf::Vector2f(sf::Mouse::getPosition()), curr_col, window, vertices);
 		}
 
 		window.clear(sf::Color::White);
 
-		for (int i = 0; i < vertices.size(); i++)
-		{
-			window.draw(vertices[i]);
-		}
-
+			for (int j = 0; j < vertices[0].size(); j++) {
+				for (int i = 0; i < vertices.size(); i++)
+				{
+					window.draw(vertices[i][j]);
+				}
+			}
+		
 		window.draw(menu);
 		for (Button *b : buttons)
 		{

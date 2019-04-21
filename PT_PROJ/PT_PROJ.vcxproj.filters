@@ -59,5 +59,8 @@
     <ClInclude Include="ExitButton.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="drawingInitialization.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

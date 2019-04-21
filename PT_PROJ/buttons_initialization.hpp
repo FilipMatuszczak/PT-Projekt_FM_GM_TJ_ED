@@ -7,7 +7,6 @@
 #include "SFML\System\String.hpp"
 #include "button.hpp"
 #include <string>
-#include <vector>
 #include "ClearButton.hpp"
 #include "EraserButton.hpp"
 #include "HandButton.hpp"
@@ -30,7 +29,7 @@ void loadTexture(Texture &texture, std::string path) {
 	
 }
 
-ClearButton getClear(int i, std::vector<sf::VertexArray>* vertices, int windowSize)
+ClearButton getClear(int i, std::vector<std::vector<sf::VertexArray>>* vertices, int windowSize)
 {
 	Texture* texture_clear_normal = new Texture();
 	Texture* texture_clear_hover = new Texture();

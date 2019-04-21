@@ -147,6 +147,7 @@
     <ClInclude Include="buttons_initialization.hpp" />
     <ClInclude Include="ClearButton.hpp" />
     <ClInclude Include="ColorButton.hpp" />
+    <ClInclude Include="drawingInitialization.hpp" />
     <ClInclude Include="EraserButton.hpp" />
     <ClInclude Include="ExitButton.hpp" />
     <ClInclude Include="HandButton.hpp" />
