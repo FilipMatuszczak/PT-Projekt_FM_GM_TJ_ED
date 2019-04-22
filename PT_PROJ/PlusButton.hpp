@@ -17,7 +17,7 @@ public:
 
 	void action() override {
 		this->setState(state::state_hovered);
-		if (*size < 20) {
+		if (*size < 10) {
 			(*size)++;
 		}
 	}
