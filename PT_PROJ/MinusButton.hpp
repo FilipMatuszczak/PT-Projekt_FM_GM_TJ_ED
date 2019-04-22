@@ -9,7 +9,11 @@ using namespace sf;
 
 class MinusButton :public Button {
 public:
-	MinusButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale) :Button(normal, clicked, hovered, location, scale) {}
+	int *size;
+	MinusButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, int *size) :Button(normal, clicked, hovered, location, scale) 
+	{
+		this->size = size;
+	}
 
 	void action() override {
 		std::cout << "Minus!";
@@ -17,5 +21,9 @@ public:
 		//do something
 
 		this->setState(state::state_hovered);
+		if (*size > 0)
+		{
+			(*size)--;
+		}
 	}
 };

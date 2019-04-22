@@ -25,7 +25,7 @@ int main()
 	initialize_drawer(vertices);
 
 	bool L_locked = false;
-
+	int size = 1;
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
@@ -44,8 +44,8 @@ int main()
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &vertices, window.getSize().x);
 	HandButton handButton = getHand(2, window.getSize().x);
-	PlusButton plusButton = getPlus(3, window.getSize().x);
-	MinusButton minusButton = getMinus(4, window.getSize().x);
+	PlusButton plusButton = getPlus(3, window.getSize().x, &size);
+	MinusButton minusButton = getMinus(4, window.getSize().x, &size);
 	PenButton penButton = getPen(5, window.getSize().x);
 	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
 	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons);
@@ -84,7 +84,9 @@ int main()
 	Colorbuttons->push_back(&redButton);
 	Colorbuttons->push_back(&whiteButton);
 	Colorbuttons->push_back(&yellowButton);
+
 	window.setVerticalSyncEnabled(false);
+	window.setFramerateLimit(60);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -107,21 +109,19 @@ int main()
 					vertice.push_back(sf::VertexArray());
 					vertice[vertice.size() - 1].setPrimitiveType(sf::LinesStrip);
 				}
-
 					for (Button *b : buttons)
 					{
 						if (b->checkClicked(sf::Vector2f(sf::Mouse::getPosition(window)))) {
 							b->action();
 						}
 					}
-
 					L_locked = false;
 			}
 		}
 
 		if (L_locked)
 		{
-				draw(sf::Vector2f(sf::Mouse::getPosition()), curr_col, window, vertices);
+			draw(sf::Vector2f(sf::Mouse::getPosition()), curr_col, window, vertices,size);
 		}
 
 		window.clear(sf::Color::White);

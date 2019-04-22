@@ -9,13 +9,16 @@ using namespace sf;
 
 class PlusButton :public Button {
 public:
-	PlusButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale) :Button(normal, clicked, hovered, location, scale) {}
+	int *size;
+	PlusButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, int *size) :Button(normal, clicked, hovered, location, scale) 
+	{
+		this->size = size;
+	}
 
 	void action() override {
-		std::cout << "Plus!";
-
-		//do something
-
 		this->setState(state::state_hovered);
+		if (*size < 20) {
+			(*size)++;
+		}
 	}
 };
