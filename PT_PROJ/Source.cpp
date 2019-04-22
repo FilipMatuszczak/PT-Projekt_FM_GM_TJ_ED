@@ -37,7 +37,7 @@ int main()
 	menu.setOutlineThickness(5);
 	menu.setFillColor(sf::Color(245, 222, 179, 255));
 	menu.setPosition(0, 0);
-
+	Texture currentWindow;
 	sf::Vector2i Border_Offset(0, 0);
 	std::vector<Button*> *Colorbuttons = new std::vector<Button*>();
 
@@ -85,8 +85,6 @@ int main()
 	Colorbuttons->push_back(&whiteButton);
 	Colorbuttons->push_back(&yellowButton);
 
-	window.setVerticalSyncEnabled(false);
-	window.setFramerateLimit(60);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -105,9 +103,14 @@ int main()
 
 			if (event.type == sf::Event::MouseButtonReleased)
 			{
-				for (std::vector<sf::VertexArray> &vertice : vertices) {
-					vertice.push_back(sf::VertexArray());
-					vertice[vertice.size() - 1].setPrimitiveType(sf::LinesStrip);
+				currentWindow.create(window.getSize().x, window.getSize().y);
+				currentWindow.update(window);
+
+				for (auto &vertice : vertices) {
+					vertice.clear();
+					sf::VertexArray arr;
+					arr.setPrimitiveType(sf::LinesStrip);
+					vertice.push_back(arr);
 				}
 					for (Button *b : buttons)
 					{
@@ -126,6 +129,10 @@ int main()
 
 		window.clear(sf::Color::White);
 
+		sf::Sprite sprite;
+		sprite.setTexture(currentWindow);
+		window.draw(sprite);
+
 			for (int j = 0; j < vertices[0].size(); j++) {
 				for (int i = 0; i < vertices.size(); i++)
 				{
@@ -140,7 +147,8 @@ int main()
 			b->checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 			window.draw(*b->getSprite());
 		}
-
+	
+		
 		window.display();
 	}
 
