@@ -10,18 +10,20 @@ using namespace sf;
 class ClearButton : public Button {
 public:
 	std::vector<std::vector<sf::VertexArray>> *vertices;
-	ClearButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, std::vector<std::vector<sf::VertexArray>> *vertices) :Button(normal, clicked, hovered, location, scale)
+	sf::Texture *window;
+	ClearButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, sf::Texture*window) :Button(normal, clicked, hovered, location, scale)
 	{
-		this->vertices = vertices;
+		this->window = window;
 	}
 
 	void action() override {
-		for (auto &vertice : *vertices) {
-			vertice.clear();
-			sf::VertexArray arr;
-			arr.setPrimitiveType(sf::LinesStrip);
-			vertice.push_back(arr);
-			this->setState(state::state_hovered);
-		}
+
+		window->create(window->getSize().x, window->getSize().y);
+		window->loadFromFile("./icons/background.png");
+
+
+
+		this->setState(state::state_normal);
+
 	}
 };

@@ -29,7 +29,7 @@ void loadTexture(Texture &texture, std::string path) {
 	
 }
 
-ClearButton getClear(int i, std::vector<std::vector<sf::VertexArray>>* vertices, int windowSize)
+ClearButton getClear(int i, sf::Texture*window, int windowSize)
 {
 	Texture* texture_clear_normal = new Texture();
 	Texture* texture_clear_hover = new Texture();
@@ -42,7 +42,7 @@ ClearButton getClear(int i, std::vector<std::vector<sf::VertexArray>>* vertices,
 	loadTexture(*texture_clear_hover, "./icons/clear_hover.png");
 	loadTexture(*texture_clear_clicked, "./icons/clear_pressed.png");
 
-	return ClearButton(texture_clear_normal, texture_clear_clicked, texture_clear_hover, sf::Vector2f(x, y), scale, vertices);
+	return ClearButton(texture_clear_normal, texture_clear_clicked, texture_clear_hover, sf::Vector2f(x, y), scale, window);
 }
 
 SaveButton getSave(int i, int windowSize, sf::Window * window)

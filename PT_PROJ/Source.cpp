@@ -42,7 +42,7 @@ int main()
 	std::vector<Button*> *Colorbuttons = new std::vector<Button*>();
 
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
-	ClearButton clearButton = getClear(1, &vertices, window.getSize().x);
+	ClearButton clearButton = getClear(1, &currentWindow, window.getSize().x);
 	HandButton handButton = getHand(2, window.getSize().x);
 	PlusButton plusButton = getPlus(3, window.getSize().x, &size);
 	MinusButton minusButton = getMinus(4, window.getSize().x, &size);
