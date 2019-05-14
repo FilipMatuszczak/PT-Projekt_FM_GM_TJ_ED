@@ -19,6 +19,7 @@ public:
 	state getState();
 	sf::Sprite* getSprite();
 	virtual void action() = 0;
+	virtual sf::Color getColor() = 0;
 	bool isClicked();
 private:
 	sf::Sprite normal;

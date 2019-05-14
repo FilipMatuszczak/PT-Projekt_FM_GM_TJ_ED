@@ -10,7 +10,6 @@
 #include "PenButton.hpp"
 #include "PlusButton.hpp"
 #include "SaveButton.hpp"
-#include "SettingsButton.hpp"
 #include "buttons_initialization.hpp"
 #include "drawingInitialization.hpp"
 
@@ -29,7 +28,7 @@ int main()
 	sf::Color curr_col = sf::Color::Black;
 	sf::Vector2i last_Mouse_pos(0, 0);
 
-	sf::RenderWindow window(sf::VideoMode(), "PPencil", sf::Style::Fullscreen);
+	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "PPencil", sf::Style::Fullscreen);
 
 	sf::RectangleShape menu;
 	menu.setSize(sf::Vector2f(window.getSize().x, 70));
@@ -40,14 +39,16 @@ int main()
 	Texture currentWindow;
 	sf::Vector2i Border_Offset(0, 0);
 	std::vector<Button*> *Colorbuttons = new std::vector<Button*>();
+	std::vector<Button*> *Toolbuttons = new std::vector<Button*>();
+
 
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &currentWindow, window.getSize().x);
 	HandButton handButton = getHand(2, window.getSize().x);
 	PlusButton plusButton = getPlus(3, window.getSize().x, &size);
 	MinusButton minusButton = getMinus(4, window.getSize().x, &size);
-	PenButton penButton = getPen(5, window.getSize().x);
-	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col);
+	PenButton penButton = getPen(5, window.getSize().x, &curr_col, Toolbuttons, Colorbuttons);
+	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col, Toolbuttons);
 	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton whiteButton = getWhite(8, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton yellowButton = getYellow(9, window.getSize().x, &curr_col, Colorbuttons);
@@ -55,7 +56,7 @@ int main()
 	ColorButton greenButton = getGreen(11, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton blueButton = getBlue(12, window.getSize().x, &curr_col, Colorbuttons);
 	ColorButton purpleButton = getPurple(13, window.getSize().x, &curr_col, Colorbuttons);
-	SettingsButton settingsButton = getSettings(14, window.getSize().x);
+	ColorButton pinkButton = getPink(14, window.getSize().x, &curr_col, Colorbuttons);
 	ExitButton exitButton = getExit(15, window.getSize().x, &window);
 
 	std::vector<Button*> buttons;
@@ -67,7 +68,7 @@ int main()
 	buttons.push_back(&penButton);
 	buttons.push_back(&plusButton);
 	buttons.push_back(&saveButton);
-	buttons.push_back(&settingsButton);
+	buttons.push_back(&pinkButton);
 	buttons.push_back(&blackButton);
 	buttons.push_back(&blueButton);
 	buttons.push_back(&greenButton);
@@ -84,6 +85,10 @@ int main()
 	Colorbuttons->push_back(&redButton);
 	Colorbuttons->push_back(&whiteButton);
 	Colorbuttons->push_back(&yellowButton);
+	Colorbuttons->push_back(&pinkButton);
+
+	Toolbuttons->push_back(&penButton);
+	Toolbuttons->push_back(&eraserButton);
 
 	while (window.isOpen())
 	{

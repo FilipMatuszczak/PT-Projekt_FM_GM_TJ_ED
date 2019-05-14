@@ -47,9 +47,6 @@
     <ClInclude Include="SaveButton.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsButton.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="MinusButton.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>

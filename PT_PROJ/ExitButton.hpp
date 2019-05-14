@@ -18,4 +18,9 @@ public:
 	void action() override {
 		this->window->close();
 	}
+
+	sf::Color getColor() override
+	{
+		return sf::Color::Black;
+	}
 };

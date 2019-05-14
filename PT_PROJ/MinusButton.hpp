@@ -26,4 +26,9 @@ public:
 			(*size)--;
 		}
 	}
+
+	sf::Color getColor() override
+	{
+		return sf::Color::Black;
+	}
 };

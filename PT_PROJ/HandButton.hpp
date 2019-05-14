@@ -14,4 +14,9 @@ public:
 	void action() override {
 		std::cout << "Hand!";
 	}
+
+	sf::Color getColor() override
+	{
+		return sf::Color::Black;
+	}
 };

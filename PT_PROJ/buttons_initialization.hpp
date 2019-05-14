@@ -14,7 +14,6 @@
 #include "PenButton.hpp"
 #include "PlusButton.hpp"
 #include "SaveButton.hpp"
-#include "SettingsButton.hpp"
 #include "ColorButton.hpp"
 #include "ExitButton.hpp"
 
@@ -109,7 +108,7 @@ MinusButton getMinus(int i, int windowSize, int *size)
 	return MinusButton(texture_minus_normal, texture_minus_clicked, texture_minus_hover, sf::Vector2f(x, y), scale, size);
 }
 
-EraserButton getEraser(int i, int windowSize, sf::Color *curr_col)
+EraserButton getEraser(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> *buttons)
 {
 	Texture* texture_normal = new Texture();
 	Texture* texture_hover = new Texture();
@@ -122,23 +121,7 @@ EraserButton getEraser(int i, int windowSize, sf::Color *curr_col)
 	loadTexture(*texture_hover, "./icons/eraser_hover.png");
 	loadTexture(*texture_clicked, "./icons/eraser_pressed.png");
 
-	return EraserButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale, curr_col);
-}
-
-SettingsButton getSettings(int i, int windowSize)
-{
-	Texture* texture_normal = new Texture();
-	Texture* texture_hover = new Texture();
-	Texture* texture_clicked = new Texture();
-
-	int x = windowSize / divider * i;
-	int y = 0;
-
-	loadTexture(*texture_normal, "./icons/settings_free.png");
-	loadTexture(*texture_hover, "./icons/settings_hover.png");
-	loadTexture(*texture_clicked, "./icons/settings_pressed.png");
-
-	return SettingsButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale);
+	return EraserButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale, curr_col, buttons);
 }
 
 ExitButton getExit(int i, int windowSize, sf::Window * window)
@@ -157,7 +140,7 @@ ExitButton getExit(int i, int windowSize, sf::Window * window)
 	return ExitButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale, window);
 }
 
-PenButton getPen(int i, int windowSize)
+PenButton getPen(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> *buttons, std::vector<Button*> *colorButtons)
 {
 	Texture* texture_normal = new Texture();
 	Texture* texture_hover = new Texture();
@@ -169,7 +152,7 @@ PenButton getPen(int i, int windowSize)
 	loadTexture(*texture_hover, "./icons/pen_hover.png");
 	loadTexture(*texture_clicked, "./icons/pen_pressed.png");
 
-	return PenButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, 0), scale);
+	return PenButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, 0), scale, curr_col, buttons, colorButtons);
 }
 
 ColorButton getBlack(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> *buttons)
@@ -234,6 +217,22 @@ ColorButton getPurple(int i, int windowSize, sf::Color *curr_col, std::vector<Bu
 	loadTexture(*texture_clicked, "./icons/purple_pressed.png");
 
 	return ColorButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale, curr_col, sf::Color(155,89,182,255), buttons);
+}
+
+ColorButton getPink(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> *buttons)
+{
+	Texture* texture_normal = new Texture();
+	Texture* texture_hover = new Texture();
+	Texture* texture_clicked = new Texture();
+
+	int x = windowSize / divider * i;
+	int y = 0;
+
+	loadTexture(*texture_normal, "./icons/pink_free.png");
+	loadTexture(*texture_hover, "./icons/pink_hover.png");
+	loadTexture(*texture_clicked, "./icons/pink_pressed.png");
+
+	return ColorButton(texture_normal, texture_clicked, texture_hover, sf::Vector2f(x, y), scale, curr_col, sf::Color(255, 83, 221, 255), buttons);
 }
 
 ColorButton getRed(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> *buttons)

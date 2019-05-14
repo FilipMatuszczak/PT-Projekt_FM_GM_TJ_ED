@@ -33,4 +33,9 @@ public:
 
 		this->setState(state::state_normal);
 	};
+
+	sf::Color getColor() override
+	{
+		return sf::Color::Black;
+	}
 };

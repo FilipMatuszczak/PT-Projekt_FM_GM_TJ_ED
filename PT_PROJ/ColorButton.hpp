@@ -42,4 +42,8 @@ public:
 		
 
 	}
+
+	sf::Color getColor() override {
+		return this->color;
+	}
 };
