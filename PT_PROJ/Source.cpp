@@ -18,7 +18,7 @@ using namespace sf;
 int main()
 {
 	srand(time(NULL));
-
+	bool var = false;
 	std::vector<std::vector<sf::VertexArray>> vertices;
 
 	initialize_drawer(vertices);
@@ -129,7 +129,9 @@ int main()
 
 		if (L_locked)
 		{
-			draw(sf::Vector2f(sf::Mouse::getPosition()), curr_col, window, vertices,size);
+			sf::Vector2i pos = sf::Mouse::getPosition();
+			draw(sf::Vector2f(pos), curr_col, window, vertices, size);
+			last_Mouse_pos = pos;
 		}
 
 		window.clear(sf::Color::White);
@@ -138,12 +140,22 @@ int main()
 		sprite.setTexture(currentWindow);
 		window.draw(sprite);
 
-			for (int j = 0; j < vertices[0].size(); j++) {
+			
 				for (int i = 0; i < vertices.size(); i++)
 				{
+					for (int j = 0; j < vertices[0].size(); j++) {
 					window.draw(vertices[i][j]);
+					if (vertices[i][j].getVertexCount() == 2)
+					{
+						vertices[i].clear();
+						sf::VertexArray arr;
+						arr.setPrimitiveType(sf::LinesStrip);
+						vertices[i].push_back(arr);
+						var = true;
+					}
 				}
 			}
+				
 		
 		window.draw(menu);
 		for (Button *b : buttons)
@@ -153,8 +165,15 @@ int main()
 			window.draw(*b->getSprite());
 		}
 	
-		
+		if (var == true)
+		{
+			currentWindow.create(window.getSize().x, window.getSize().y);
+			currentWindow.update(window);
+			draw(sf::Vector2f(last_Mouse_pos), curr_col, window, vertices, size);
+			var = false;
+		}
 		window.display();
+		
 	}
 
 	return 0;

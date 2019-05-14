@@ -6,7 +6,7 @@
 
 void initialize_drawer(std::vector<std::vector<sf::VertexArray>> &vertices) {
 
-	for (int i = 0; i < 400; i++)
+	for (int i = 0; i < 370; i++)
 	{
 		std::vector<sf::VertexArray> v;
 		v.push_back(VertexArray());
