@@ -1,2 +1,8 @@
 ﻿  Main.cpp
-  OpenCV_3_4_Project1.vcxproj -> C:\Users\Gosia\source\repos\OpenCVDeekcja\x64\Debug\OpenCV_3_4_Project1.exe
+c:\przemkov_opencv\opencvdetekcja\opencv_3_4_project1\main.cpp(109): warning C4244: 'argument': conversion from 'double' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=float
+          ]
+c:\przemkov_opencv\opencvdetekcja\opencv_3_4_project1\main.cpp(110): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  OpenCV_3_4_Project1.vcxproj -> C:\Przemkov_OpenCV\OpenCVDetekcja\x64\Debug\OpenCV_3_4_Project1.exe
