@@ -12,10 +12,10 @@ public:
 	sf::Color *curr_col;
 	std::vector<Button*> *toolButtons;
 	std::vector<Button*> *colorButtons;
-	PenButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, sf::Color *curr_col, std::vector<Button*> *toolButtons, std::vector<Button*> *colorButtons) :Button(normal, clicked, hovered, location, scale) {
+	PenButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, sf::Color *curr_col, std::vector<Button*> &toolButtons, std::vector<Button*> &colorButtons) :Button(normal, clicked, hovered, location, scale) {
 		this->curr_col = curr_col;
-		this->toolButtons = toolButtons;
-		this->colorButtons = colorButtons;
+		this->toolButtons = &toolButtons;
+		this->colorButtons = &colorButtons;
 	}
 
 	void action() override {

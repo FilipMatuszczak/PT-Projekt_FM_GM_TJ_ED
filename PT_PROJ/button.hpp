@@ -10,7 +10,7 @@ using namespace sf;
 
 class Button {
 public:
-	static enum state {state_clicked, state_hovered, state_normal};
+	enum state {state_clicked, state_hovered, state_normal};
 	Button(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale);
 	void checkHover(sf::Vector2f);
 	void checkNormal(sf::Vector2f mousePos);

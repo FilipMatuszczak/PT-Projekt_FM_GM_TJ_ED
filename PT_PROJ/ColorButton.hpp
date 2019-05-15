@@ -13,6 +13,7 @@ public:
 	sf::Color *curr_col;
 	sf::Color color;
 	std::vector<Button*> *colorButtons;
+	std::vector<Button*> *toolButtons;
 	ColorButton(
 		sf::Texture* normal,
 		sf::Texture* clicked,
@@ -21,11 +22,13 @@ public:
 		float scale,
 		sf::Color *curr_col,
 		sf::Color color,
-		std::vector<Button*> *colorButtons
+		std::vector<Button*> &colorButtons,
+		std::vector<Button*> &toolButtons
 	) :Button(normal, clicked, hovered, location, scale) {
 		this->curr_col = curr_col;
 		this->color = color;
-		this->colorButtons = colorButtons;
+		this->colorButtons = &colorButtons;
+		this->toolButtons = &toolButtons;
 	}
 
 	void action() override {
@@ -36,7 +39,19 @@ public:
 				b->setState(state::state_normal);
 			}
 		}
-
+		int inc = 0;
+		for (Button *b : *toolButtons)
+		{
+			if (inc == 0)
+			{
+				b->setState(state::state_clicked);
+			}
+			else if (inc == 1)
+			{
+				b->setState(state::state_normal);
+			}
+			inc++;
+		}
 		this->setState(state::state_clicked);
 		*this->curr_col = color;
 		
