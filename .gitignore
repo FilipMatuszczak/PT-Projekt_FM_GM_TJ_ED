@@ -1,8 +1,0 @@
-# Visual Studio 2015/2017 cache/options directory
-.idea/
-.vs/
-x64/Debug/PT_PROJ.exe
-x64/Debug/PT_PROJ.ilk
-x64/Debug/PT_PROJ.pdb
-PT_PROJ/Debug/
-PT_PROJ/x64

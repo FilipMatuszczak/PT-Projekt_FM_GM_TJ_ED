@@ -1,0 +1,14 @@
+﻿  Detector.cpp
+c:\users\gosia\source\repos\pt_project_bodypainting\pt_project_bodypainting\detector.cpp(57): warning C4477: „printf”: ciąg formatu „%d” wymaga argumentu typu „int”, ale argument 1 ze zmienną liczbą argumentów ma typ „unsigned __int64”
+  c:\users\gosia\source\repos\pt_project_bodypainting\pt_project_bodypainting\detector.cpp(57): note: rozważ użycie elementu „%zd” w ciągu formatu
+c:\users\gosia\source\repos\pt_project_bodypainting\pt_project_bodypainting\detector.cpp(61): warning C4244: "=": konwersja z "_Tp" do "int", możliwa utrata danych
+          with
+          [
+              _Tp=float
+          ]
+c:\users\gosia\source\repos\pt_project_bodypainting\pt_project_bodypainting\detector.cpp(62): warning C4244: "=": konwersja z "_Tp" do "int", możliwa utrata danych
+          with
+          [
+              _Tp=float
+          ]
+  PT_Project_BodyPainting.vcxproj -> C:\Users\Gosia\source\repos\PT_Project_BodyPainting\x64\Debug\PT_Project_BodyPainting.exe
