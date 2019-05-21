@@ -4,7 +4,7 @@ using namespace cv;
 
 PurpleDetector::PurpleDetector()
 {
-	this->uperColor = cv::Scalar(255, 130, 210);
+	this->upperColor = cv::Scalar(255, 130, 210);
 	this->lowerColor = cv::Scalar(120, 0, 70);
 }
 

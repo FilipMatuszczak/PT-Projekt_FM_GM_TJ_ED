@@ -11,19 +11,21 @@ private:
 	cv::VideoCapture cap;
 
 protected:
-	cv::Scalar uperColor;
+	cv::Scalar upperColor;
 	cv::Scalar lowerColor;
-
+	cv::Scalar lowerBoundary = cv::Scalar(125, 75, 40);
+	cv::Scalar upperBoundary = cv::Scalar(150, 255, 255);
 public:
 	Detector();
 	~Detector();
 
 	int getX();
 	int getY();
-
+	cv::Point2d getResolution();
 	bool detect();
 
 	bool isCameraOK();
+	
 };
 
 

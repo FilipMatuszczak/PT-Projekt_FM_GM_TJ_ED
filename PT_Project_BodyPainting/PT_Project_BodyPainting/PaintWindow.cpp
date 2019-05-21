@@ -85,7 +85,7 @@ PaintWindow::PaintWindow()
 	Border_Offset = Vector2i(0, 0);
 	CreateButtons();
 
-	lastPointerPos = Vector2i(0, 0);
+	lastPointerPos = Vector2f(0, 0);
 }
 
 
@@ -192,16 +192,20 @@ void PaintWindow::run()
 		if (purpleDetector && purpleDetector->detect())
 		{
 			draw(sf::Vector2f(lastPointerPos), curr_col, window, vertices, size);
-			lastPointerPos = sf::Vector2i(purpleDetector->getX(), purpleDetector->getY());
-			draw(sf::Vector2f(lastPointerPos), curr_col, window, vertices, size);
-
+			if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
+			{
+				float x_proportion = (float)window.getSize().x / (float)purpleDetector->getResolution().x;
+				float y_proportion = (float)window.getSize().y / (float)purpleDetector->getResolution().y;
+				lastPointerPos = sf::Vector2f(purpleDetector->getX()*x_proportion, purpleDetector->getY()*y_proportion);
+				draw(lastPointerPos, curr_col, window, vertices, size);
+			}
 		}
 		if (L_locked)
 		{
 			sf::Vector2i pos = sf::Mouse::getPosition();
-			draw(sf::Vector2f(pos), curr_col, window, vertices, size);
+			//draw(sf::Vector2f(pos), curr_col, window, vertices, size);
 			
-			last_Mouse_pos = pos;
+			//last_Mouse_pos = pos;
 		}
 
 		window.clear(sf::Color::White);
@@ -221,7 +225,6 @@ void PaintWindow::run()
 					sf::VertexArray arr;
 					arr.setPrimitiveType(sf::LinesStrip);
 					vertices[i].push_back(arr);
-					var = true;
 				}
 			}
 		}
@@ -234,16 +237,12 @@ void PaintWindow::run()
 			b->checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 			window.draw(*b->getSprite());
 		}
-
-		if (var == true)
+		if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
 		{
 			currentWindow.create(window.getSize().x, window.getSize().y);
 			currentWindow.update(window);
-			draw(sf::Vector2f(last_Mouse_pos), curr_col, window, vertices, size);
-			var = false;
+			draw(sf::Vector2f(lastPointerPos), curr_col, window, vertices, size);
 		}
-		
-
 		window.display();
 
 	}

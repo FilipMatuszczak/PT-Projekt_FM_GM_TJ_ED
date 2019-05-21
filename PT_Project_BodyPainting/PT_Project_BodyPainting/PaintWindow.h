@@ -23,7 +23,7 @@ private:
 	std::vector<Button*> buttons;
 
 	PurpleDetector * purpleDetector;
-	sf::Vector2i lastPointerPos;
+	sf::Vector2f lastPointerPos;
 	
 	void CreateMenu();
 	void CreateButtons();

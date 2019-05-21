@@ -1,7 +1,11 @@
 #include "Detector.h"
+#include <iostream>
 #include <vector>
+#include <string>
 
 using namespace cv;
+bool compareContourAreas(std::vector<cv::Point> contour1, std::vector<cv::Point> contour2);
+
 Detector::Detector()
 {
 	cameraOK = true;
@@ -23,6 +27,11 @@ Detector::~Detector()
 {
 }
 
+Point2d Detector::getResolution()
+{
+	return { cap.get(CV_CAP_PROP_FRAME_WIDTH), cap.get(CV_CAP_PROP_FRAME_HEIGHT) };
+}
+
 int Detector::getX()
 {
 	return x;
@@ -35,37 +44,47 @@ int Detector::getY()
 
 bool Detector::detect()
 {
-	//color detect//
-	Mat frame;
-	Mat src;
-	cap >> src;
-	//Mat hsv_purple;
-	//Mat bgr_purple = Mat(1, 1, CV_8UC3, Scalar(270, 70, 70));
-	inRange(src, lowerColor, uperColor, frame);
-
-	medianBlur(frame, frame, 7);
-
-	//cvtColor(frame, hsv_purple, COLOR_BGR2HSV);
-
-
-	std::vector<Vec3f> circles;
-
-	//circle detect//
-	HoughCircles(frame, circles, CV_HOUGH_GRADIENT, 1, frame.rows / 8, 30, 15, 20, 70);
-
-
-	printf("%d", circles.size());
-
-	if(circles.size() > 0)
-	{
-		x = circles[0][0];
-		y = circles[0][1];
-		circle(src, Point(x, y), 100, Scalar(0, 28, 255));
-	}
+	//return (circles.size() > 0);
+	Mat frame, frame_HSV, frame_threshold, temp;
 	
-	imshow("normalView", src);
+	cap >> frame;
+		
+	flip(frame, frame, +1);
+	// Convert from BGR to HSV colorspace
+	cvtColor(frame, frame_HSV, COLOR_BGR2HSV);
 
-	return (circles.size() > 0);
+	// Detect the object based on HSV Range Values
+	inRange(frame_HSV, lowerBoundary, upperBoundary, frame_threshold);
+
+
+	std::vector<std::vector<Point>> contours = {};
+	std::vector<Vec4i> hierarchy = {};
+	findContours(frame_threshold, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+
+	if (contours.size() > 0)
+	{
+		std::sort(contours.begin(), contours.end(), compareContourAreas);
+		Moments moment = moments(contours[contours.size() - 1], false);
+
+
+		//THAT IS THE CENTRE POINT. THIS NEEDS TO BE THROWN TO MATES IN UI
+		Point2f mass_centre(moment.m10 / moment.m00, moment.m01 / moment.m00);
+		x = mass_centre.x;
+		y = mass_centre.y;
+
+
+		drawContours(frame, contours, contours.size() - 1, { 255,255,255 }, 2, 8, hierarchy, 0, Point());
+		circle(frame, mass_centre, 4, { 255,255,255 }, -1, 8, 0);
+	}
+	imshow("normalView", frame);
+	return (contours.size() > 0);
+}
+
+bool compareContourAreas(std::vector<cv::Point> contour1, std::vector<cv::Point> contour2)
+{
+	double i = fabs(contourArea(cv::Mat(contour1)));
+	double j = fabs(contourArea(cv::Mat(contour2)));
+	return (i < j);
 }
 
 bool Detector::isCameraOK()
