@@ -76,7 +76,7 @@ HandButton getHand(int i, int windowSize, bool *capture)
 	return HandButton(texture_hand_normal, texture_hand_clicked, texture_hand_hover, sf::Vector2f(x, y), scale, capture);
 }
 
-PlusButton getPlus(int i, int windowSize, int *size)
+PlusButton getPlus(int i, int windowSize, int *size, std::vector<std::vector<sf::VertexArray> > &vertices)
 {
 	Texture* texture_plus_normal = new Texture();
 	Texture* texture_plus_hover = new Texture();
@@ -89,10 +89,10 @@ PlusButton getPlus(int i, int windowSize, int *size)
 	loadTexture(*texture_plus_hover, "./icons/plus_hover.png");
 	loadTexture(*texture_plus_clicked, "./icons/plus_pressed.png");
 
-	return PlusButton(texture_plus_normal, texture_plus_clicked, texture_plus_hover, sf::Vector2f(x, y), scale, size);
+	return PlusButton(texture_plus_normal, texture_plus_clicked, texture_plus_hover, sf::Vector2f(x, y), scale, size, vertices);
 }
 
-MinusButton getMinus(int i, int windowSize, int *size)
+MinusButton getMinus(int i, int windowSize, int *size, std::vector<std::vector<sf::VertexArray> > &vertices)
 {
 	Texture* texture_minus_normal = new Texture();
 	Texture* texture_minus_hover = new Texture();
@@ -105,7 +105,7 @@ MinusButton getMinus(int i, int windowSize, int *size)
 	loadTexture(*texture_minus_hover, "./icons/minus_hover.png");
 	loadTexture(*texture_minus_clicked, "./icons/minus_pressed.png");
 
-	return MinusButton(texture_minus_normal, texture_minus_clicked, texture_minus_hover, sf::Vector2f(x, y), scale, size);
+	return MinusButton(texture_minus_normal, texture_minus_clicked, texture_minus_hover, sf::Vector2f(x, y), scale, size, vertices);
 }
 
 EraserButton getEraser(int i, int windowSize, sf::Color *curr_col, std::vector<Button*> &buttons)

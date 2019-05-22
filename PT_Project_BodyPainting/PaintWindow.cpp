@@ -59,8 +59,8 @@ void PaintWindow::run()
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &currentWindow, window.getSize().x);
 	HandButton handButton = getHand(2, window.getSize().x, &capture);
-	PlusButton plusButton = getPlus(3, window.getSize().x, &size);
-	MinusButton minusButton = getMinus(4, window.getSize().x, &size);
+	PlusButton plusButton = getPlus(3, window.getSize().x, &size, vertices);
+	MinusButton minusButton = getMinus(4, window.getSize().x, &size, vertices);
 	PenButton penButton = getPen(5, window.getSize().x, &curr_col, Toolbuttons, Colorbuttons);
 	EraserButton eraserButton = getEraser(6, window.getSize().x, &curr_col, Toolbuttons);
 	ColorButton blackButton = getBlack(7, window.getSize().x, &curr_col, Colorbuttons, Toolbuttons);
