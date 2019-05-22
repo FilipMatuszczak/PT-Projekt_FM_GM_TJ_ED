@@ -53,7 +53,7 @@ void PaintWindow::run()
 	menu.setOutlineThickness(5);
 	menu.setFillColor(sf::Color(245, 222, 179, 255));
 	menu.setPosition(0, 0);
-
+	int confideceLevel = 0;
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &currentWindow, window.getSize().x);
 	HandButton handButton = getHand(2, window.getSize().x);
@@ -72,7 +72,7 @@ void PaintWindow::run()
 	ExitButton exitButton = getExit(15, window.getSize().x, &window);
 	penButton.setState(Button::state_clicked);
 	std::vector<Button*> buttons;
-
+	bool detect = false;
 	buttons.push_back(&clearButton);
 	buttons.push_back(&eraserButton);
 	buttons.push_back(&handButton);
@@ -101,7 +101,7 @@ void PaintWindow::run()
 
 	Toolbuttons.push_back(&penButton);
 	Toolbuttons.push_back(&eraserButton);
-	window.setFramerateLimit(120);
+	window.setFramerateLimit(200);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -138,9 +138,29 @@ void PaintWindow::run()
 				L_locked = false;
 			}
 		}
-		bool detect = purpleDetector && purpleDetector->detect();
 
+		detect =   purpleDetector->detect();
 		if (detect)
+		{
+			confideceLevel++;
+		}
+
+		if (confideceLevel > 1000)
+		{
+			confideceLevel = 20;
+		}
+		std::cout << detect << std::endl;
+		if (!detect) {
+			confideceLevel = 0;
+			for (auto &vertice : vertices) {
+				vertice.clear();
+				sf::VertexArray arr;
+				arr.setPrimitiveType(sf::LinesStrip);
+				vertice.push_back(arr);
+				var = false;
+			}
+		}
+		if (confideceLevel > 5)
 		{
 			if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
 			{
@@ -150,7 +170,8 @@ void PaintWindow::run()
 				draw(lastPointerPos, curr_col, window, vertices, size);
 			}
 		}
-		if(!detect) {
+		else
+		{
 			for (auto &vertice : vertices) {
 				vertice.clear();
 				sf::VertexArray arr;
@@ -159,6 +180,7 @@ void PaintWindow::run()
 				var = false;
 			}
 		}
+		
 		if (L_locked)
 		{
 			sf::Vector2i pos = sf::Mouse::getPosition();
@@ -197,7 +219,7 @@ void PaintWindow::run()
 			b->checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 			window.draw(*b->getSprite());
 		}
-		if (var == true)
+		if (var == true && detect)
 		{
 			currentWindow.create(window.getSize().x, window.getSize().y);
 			currentWindow.update(window);
