@@ -173,6 +173,7 @@ void PaintWindow::run()
 			}
 			else
 			{
+				
 				for (auto &vertice : vertices) {
 					vertice.clear();
 					sf::VertexArray arr;
@@ -182,13 +183,15 @@ void PaintWindow::run()
 				}
 			}
 		}
+		else {
+			confideceLevel = 0;
+			if (L_locked)
+			{
+				sf::Vector2i pos = sf::Mouse::getPosition();
+				draw(sf::Vector2f(pos), curr_col, window, vertices, size);
 
-		if (L_locked)
-		{
-			sf::Vector2i pos = sf::Mouse::getPosition();
-			//draw(sf::Vector2f(pos), curr_col, window, vertices, size);
-
-			//last_Mouse_pos = pos;
+				last_Mouse_pos = pos;
+			}
 		}
 
 		window.clear(sf::Color::White);
@@ -226,6 +229,13 @@ void PaintWindow::run()
 			currentWindow.create(window.getSize().x, window.getSize().y);
 			currentWindow.update(window);
 			draw(sf::Vector2f(lastPointerPos), curr_col, window, vertices, size);
+			var = false;
+		}
+		else if (var == true && !capture)
+		{
+			currentWindow.create(window.getSize().x, window.getSize().y);
+			currentWindow.update(window);
+			draw(sf::Vector2f(last_Mouse_pos), curr_col, window, vertices, size);
 			var = false;
 		}
 		window.display();
