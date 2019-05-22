@@ -47,7 +47,7 @@ PaintWindow::~PaintWindow()
 void PaintWindow::run()
 {
 	sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "PPencil", sf::Style::Fullscreen);
-
+	
 	menu.setSize(sf::Vector2f(window.getSize().x, 70));
 	menu.setOutlineColor(sf::Color::Black);
 	menu.setOutlineThickness(5);
@@ -56,7 +56,7 @@ void PaintWindow::run()
 	int confideceLevel = 0;
 	SaveButton saveButton = getSave(0, window.getSize().x, &window);
 	ClearButton clearButton = getClear(1, &currentWindow, window.getSize().x);
-	HandButton handButton = getHand(2, window.getSize().x);
+	HandButton handButton = getHand(2, window.getSize().x, &capture);
 	PlusButton plusButton = getPlus(3, window.getSize().x, &size);
 	MinusButton minusButton = getMinus(4, window.getSize().x, &size);
 	PenButton penButton = getPen(5, window.getSize().x, &curr_col, Toolbuttons, Colorbuttons);
@@ -139,48 +139,50 @@ void PaintWindow::run()
 			}
 		}
 
-		detect =   purpleDetector->detect();
-		if (detect)
-		{
-			confideceLevel++;
+		if (capture) {
+			detect = purpleDetector->detect();
+			if (detect)
+			{
+				confideceLevel++;
+			}
+
+			if (confideceLevel > 1000)
+			{
+				confideceLevel = 20;
+			}
+			std::cout << detect << std::endl;
+			if (!detect) {
+				confideceLevel = 0;
+				for (auto &vertice : vertices) {
+					vertice.clear();
+					sf::VertexArray arr;
+					arr.setPrimitiveType(sf::LinesStrip);
+					vertice.push_back(arr);
+					var = false;
+				}
+			}
+			if (confideceLevel > 5)
+			{
+				if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
+				{
+					float x_proportion = (float)window.getSize().x / (float)purpleDetector->getResolution().x;
+					float y_proportion = (float)window.getSize().y / (float)purpleDetector->getResolution().y;
+					lastPointerPos = sf::Vector2f(purpleDetector->getX()*x_proportion, purpleDetector->getY()*y_proportion);
+					draw(lastPointerPos, curr_col, window, vertices, size);
+				}
+			}
+			else
+			{
+				for (auto &vertice : vertices) {
+					vertice.clear();
+					sf::VertexArray arr;
+					arr.setPrimitiveType(sf::LinesStrip);
+					vertice.push_back(arr);
+					var = false;
+				}
+			}
 		}
 
-		if (confideceLevel > 1000)
-		{
-			confideceLevel = 20;
-		}
-		std::cout << detect << std::endl;
-		if (!detect) {
-			confideceLevel = 0;
-			for (auto &vertice : vertices) {
-				vertice.clear();
-				sf::VertexArray arr;
-				arr.setPrimitiveType(sf::LinesStrip);
-				vertice.push_back(arr);
-				var = false;
-			}
-		}
-		if (confideceLevel > 5)
-		{
-			if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
-			{
-				float x_proportion = (float)window.getSize().x / (float)purpleDetector->getResolution().x;
-				float y_proportion = (float)window.getSize().y / (float)purpleDetector->getResolution().y;
-				lastPointerPos = sf::Vector2f(purpleDetector->getX()*x_proportion, purpleDetector->getY()*y_proportion);
-				draw(lastPointerPos, curr_col, window, vertices, size);
-			}
-		}
-		else
-		{
-			for (auto &vertice : vertices) {
-				vertice.clear();
-				sf::VertexArray arr;
-				arr.setPrimitiveType(sf::LinesStrip);
-				vertice.push_back(arr);
-				var = false;
-			}
-		}
-		
 		if (L_locked)
 		{
 			sf::Vector2i pos = sf::Mouse::getPosition();
@@ -219,7 +221,7 @@ void PaintWindow::run()
 			b->checkNormal(sf::Vector2f(sf::Mouse::getPosition(window)));
 			window.draw(*b->getSprite());
 		}
-		if (var == true && detect)
+		if (var == true && detect && capture)
 		{
 			currentWindow.create(window.getSize().x, window.getSize().y);
 			currentWindow.update(window);

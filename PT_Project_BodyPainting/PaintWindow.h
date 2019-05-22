@@ -11,6 +11,7 @@ private:
 	bool var = false;
 
 	int size = 1;
+	bool capture = false;
 	sf::Color curr_col;
 	sf::Vector2i last_Mouse_pos;
 	sf::Vector2i Border_Offset; 

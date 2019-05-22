@@ -9,10 +9,17 @@ using namespace sf;
 
 class HandButton : public Button {
 public:
-	HandButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale) :Button(normal, clicked, hovered, location, scale) {}
+	bool *capture;
+	HandButton(sf::Texture* normal, sf::Texture* clicked, sf::Texture* hovered, sf::Vector2f location, float scale, bool *capture) :Button(normal, clicked, hovered, location, scale) {
+		this->capture = capture;
+	}
 
 	void action() override {
-		std::cout << "Hand!";
+		if (*capture)
+		{
+			*capture = false;
+		}
+		else *capture = true;
 	}
 
 	sf::Color getColor() override

@@ -60,7 +60,7 @@ SaveButton getSave(int i, int windowSize, sf::Window * window)
 	return SaveButton(texture_save_normal, texture_save_clicked, texture_save_hover, sf::Vector2f(x, y), scale, window);
 }
 
-HandButton getHand(int i, int windowSize)
+HandButton getHand(int i, int windowSize, bool *capture)
 {
 	Texture* texture_hand_normal = new Texture();
 	Texture* texture_hand_hover = new Texture();
@@ -73,7 +73,7 @@ HandButton getHand(int i, int windowSize)
 	loadTexture(*texture_hand_hover, "./icons/hand_hover.png");
 	loadTexture(*texture_hand_clicked, "./icons/hand_pressed.png");
 
-	return HandButton(texture_hand_normal, texture_hand_clicked, texture_hand_hover, sf::Vector2f(x, y), scale);
+	return HandButton(texture_hand_normal, texture_hand_clicked, texture_hand_hover, sf::Vector2f(x, y), scale, capture);
 }
 
 PlusButton getPlus(int i, int windowSize, int *size)
