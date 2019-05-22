@@ -70,7 +70,7 @@ void PaintWindow::run()
 	ColorButton purpleButton = getPurple(13, window.getSize().x, &curr_col, Colorbuttons, Toolbuttons);
 	ColorButton pinkButton = getPink(14, window.getSize().x, &curr_col, Colorbuttons, Toolbuttons);
 	ExitButton exitButton = getExit(15, window.getSize().x, &window);
-
+	penButton.setState(Button::state_clicked);
 	std::vector<Button*> buttons;
 
 	buttons.push_back(&clearButton);
@@ -148,11 +148,23 @@ void PaintWindow::run()
 				draw(lastPointerPos, curr_col, window, vertices, size);
 			}
 		}
+		if(!(purpleDetector && purpleDetector->detect())) {
+			//currentWindow.create(window.getSize().x, window.getSize().y);
+			//currentWindow.update(window);
+
+			for (auto &vertice : vertices) {
+				vertice.clear();
+				sf::VertexArray arr;
+				arr.setPrimitiveType(sf::LinesStrip);
+				vertice.push_back(arr);
+				var = false;
+			}
+		}
 		if (L_locked)
 		{
 			sf::Vector2i pos = sf::Mouse::getPosition();
 			//draw(sf::Vector2f(pos), curr_col, window, vertices, size);
-			
+
 			//last_Mouse_pos = pos;
 		}
 

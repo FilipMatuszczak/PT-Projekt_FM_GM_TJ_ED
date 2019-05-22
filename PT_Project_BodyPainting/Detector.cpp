@@ -64,17 +64,19 @@ bool Detector::detect()
 	if (contours.size() > 0)
 	{
 		std::sort(contours.begin(), contours.end(), compareContourAreas);
-		Moments moment = moments(contours[contours.size() - 1], false);
+		if (fabs(contourArea(cv::Mat(contours[contours.size() - 1]))) > 50.0) {
+			Moments moment = moments(contours[contours.size() - 1], false);
 
 
-		//THAT IS THE CENTRE POINT. THIS NEEDS TO BE THROWN TO MATES IN UI
-		Point2f mass_centre(moment.m10 / moment.m00, moment.m01 / moment.m00);
-		x = mass_centre.x;
-		y = mass_centre.y;
+			//THAT IS THE CENTRE POINT. THIS NEEDS TO BE THROWN TO MATES IN UI
+			Point2f mass_centre(moment.m10 / moment.m00, moment.m01 / moment.m00);
+			x = mass_centre.x;
+			y = mass_centre.y;
 
 
-		drawContours(frame, contours, contours.size() - 1, { 255,255,255 }, 2, 8, hierarchy, 0, Point());
-		circle(frame, mass_centre, 4, { 255,255,255 }, -1, 8, 0);
+			drawContours(frame, contours, contours.size() - 1, { 255,255,255 }, 2, 8, hierarchy, 0, Point());
+			circle(frame, mass_centre, 4, { 255,255,255 }, -1, 8, 0);
+		}
 	}
 	imshow("normalView", frame);
 	return (contours.size() > 0);
