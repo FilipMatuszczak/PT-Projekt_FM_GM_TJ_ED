@@ -147,6 +147,7 @@
     <ClInclude Include="PurpleDetector.h" />
     <ClInclude Include="SaveButton.hpp" />
     <ClInclude Include="SettingsButton.hpp" />
+    <ClInclude Include="shortcuts.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="button.cpp" />

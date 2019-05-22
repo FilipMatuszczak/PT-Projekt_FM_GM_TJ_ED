@@ -1,5 +1,6 @@
 #include "PaintWindow.h"
 #include "drawingInitialization.hpp"
+#include "shortcuts.hpp"
 #include "button.h"
 #include "ClearButton.hpp"
 #include "EraserButton.hpp"
@@ -9,6 +10,7 @@
 #include "PlusButton.hpp"
 #include "SaveButton.hpp"
 #include "buttons_initialization.hpp"
+
 using namespace sf;
 
 void PaintWindow::CreateMenu()
@@ -73,21 +75,22 @@ void PaintWindow::run()
 	penButton.setState(Button::state_clicked);
 	std::vector<Button*> buttons;
 	bool detect = false;
+	buttons.push_back(&saveButton);
 	buttons.push_back(&clearButton);
 	buttons.push_back(&eraserButton);
 	buttons.push_back(&handButton);
+	buttons.push_back(&plusButton);
 	buttons.push_back(&minusButton);
 	buttons.push_back(&penButton);
-	buttons.push_back(&plusButton);
-	buttons.push_back(&saveButton);
-	buttons.push_back(&pinkButton);
+
 	buttons.push_back(&blackButton);
-	buttons.push_back(&blueButton);
-	buttons.push_back(&greenButton);
-	buttons.push_back(&purpleButton);
-	buttons.push_back(&redButton);
 	buttons.push_back(&whiteButton);
 	buttons.push_back(&yellowButton);
+	buttons.push_back(&redButton);
+	buttons.push_back(&greenButton);
+	buttons.push_back(&blueButton);
+	buttons.push_back(&purpleButton);
+	buttons.push_back(&pinkButton);
 	buttons.push_back(&exitButton);
 
 	Colorbuttons.push_back(&blackButton);
@@ -107,7 +110,9 @@ void PaintWindow::run()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
+			
 			if (event.type == sf::Event::KeyPressed)
+				detectShortcut(buttons);
 				if (event.key.code == sf::Keyboard::Key::Escape)
 					window.close();
 			if (event.type == sf::Event::Closed)

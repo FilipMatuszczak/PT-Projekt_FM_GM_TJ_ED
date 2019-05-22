@@ -20,6 +20,11 @@ public:
 			*capture = false;
 		}
 		else *capture = true;
+		if (!this->isClicked())
+		{
+			this->setState(Button::state_clicked);
+		}
+		else this->setState(Button::state_normal);
 	}
 
 	sf::Color getColor() override
