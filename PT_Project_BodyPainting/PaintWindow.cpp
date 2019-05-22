@@ -101,7 +101,7 @@ void PaintWindow::run()
 
 	Toolbuttons.push_back(&penButton);
 	Toolbuttons.push_back(&eraserButton);
-
+	window.setFramerateLimit(120);
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -138,7 +138,9 @@ void PaintWindow::run()
 				L_locked = false;
 			}
 		}
-		if (purpleDetector && purpleDetector->detect())
+		bool detect = purpleDetector && purpleDetector->detect();
+
+		if (detect)
 		{
 			if (purpleDetector->getX() > 0 && purpleDetector->getY() > 0 && purpleDetector->getX() < window.getSize().x && purpleDetector->getY() < window.getSize().y)
 			{
@@ -148,10 +150,7 @@ void PaintWindow::run()
 				draw(lastPointerPos, curr_col, window, vertices, size);
 			}
 		}
-		if(!(purpleDetector && purpleDetector->detect())) {
-			//currentWindow.create(window.getSize().x, window.getSize().y);
-			//currentWindow.update(window);
-
+		if(!detect) {
 			for (auto &vertice : vertices) {
 				vertice.clear();
 				sf::VertexArray arr;
