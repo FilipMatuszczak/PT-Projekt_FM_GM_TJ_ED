@@ -155,7 +155,7 @@ void PaintWindow::run()
 			{
 				confideceLevel = 20;
 			}
-			std::cout << detect << std::endl;
+
 			if (!detect) {
 				confideceLevel = 0;
 				for (auto &vertice : vertices) {
