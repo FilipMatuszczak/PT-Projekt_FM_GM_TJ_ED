@@ -9,7 +9,7 @@
 #include <string>
 
 
-void detectShortcut(std::vector<Button*> &actionButtons)
+void detectShortcut(std::vector<Button*> &actionButtons, std::vector<std::vector<sf::VertexArray>> &vertices)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 	{
@@ -25,6 +25,12 @@ void detectShortcut(std::vector<Button*> &actionButtons)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::H))
 	{
+		for (auto &vertice : vertices) {
+			vertice.clear();
+			sf::VertexArray arr;
+			arr.setPrimitiveType(sf::LinesStrip);
+			vertice.push_back(arr);
+		}
 		actionButtons[3]->action();
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal))

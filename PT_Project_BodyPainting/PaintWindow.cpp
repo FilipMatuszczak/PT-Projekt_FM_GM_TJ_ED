@@ -112,7 +112,7 @@ void PaintWindow::run()
 		{
 			
 			if (event.type == sf::Event::KeyPressed)
-				detectShortcut(buttons);
+				detectShortcut(buttons, vertices);
 				if (event.key.code == sf::Keyboard::Key::Escape)
 					window.close();
 			if (event.type == sf::Event::Closed)
