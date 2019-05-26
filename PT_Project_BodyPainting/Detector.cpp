@@ -15,10 +15,7 @@ Detector::Detector()
 		cameraOK = false;
 		printf("Camera did not work");
 	}
-	else
-	{
-		namedWindow("result", 1);
-	}
+	
 	
 		
 }
@@ -44,7 +41,7 @@ int Detector::getY()
 
 bool Detector::detect()
 {
-	//return (circles.size() > 0);
+	
 	Mat frame, frame_HSV, frame_threshold, temp;
 	
 	cap >> frame;
@@ -78,7 +75,7 @@ bool Detector::detect()
 			circle(frame, mass_centre, 4, { 255,255,255 }, -1, 8, 0);
 		}
 	}
-	imshow("normalView", frame);
+	
 	return (contours.size() > 0);
 }
 
